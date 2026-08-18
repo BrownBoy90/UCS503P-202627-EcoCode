@@ -13,8 +13,22 @@ dependencies {
     testImplementation platform('org.junit:junit-bom:6.0.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation 'com.github.javaparser:javaparser-symbol-solver-core:3.28.2' // Allows you to parse code into an Abstract Syntax tree and figure out exactly what symbols mean(e.g. finding where a variable is or what type a method returns) // implementation means this library is required for application to run.
+    testImplementation platform('org.junit:junit-bom:5.10.0') // Adds JUnit5 BOM(bill of materials), test implementation means this only applies to test files. platform() method tells gradle to use this simply to manage and align version for any JUnit libraries we use to ensure compatibility.
+
+//    BOM - A Configuration file that contains dependencies and their versions, it ensures that if a project uses multiple libraries from the same family they all work together without conflicts
+
+//  JUnit is a framework to write and run tests in java
+
+    testImplementation 'org.junit.jupiter:junit-jupiter' // standard framework for writing unit test in JUnit5.
 }
+
+// Gradle is a build automation tool used to compile code and download dependencies and package applications for deployment
+
+// JUnit has three parts : Platform, Vintage(Used for older tests), Jupiter(Used for modern test)
 
 test {
     useJUnitPlatform()
 }
+
+// Java Parser will give AST Representation of Java source code
