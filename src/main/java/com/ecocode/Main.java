@@ -1,7 +1,9 @@
 package com.ecocode;
+import com.ecocode.model.ClassInfo;
+import com.ecocode.model.MethodInfo;
 import com.ecocode.project.JavaFileInfo;
 import com.ecocode.project.ProjectIndexer;
-
+import com.ecocode.parser.JavaProjectParser;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -11,6 +13,7 @@ public class Main {
 
     public static void main(String[] args) {
 
+        JavaProjectParser parser = new JavaProjectParser();
         Path projectPath =
                 Path.of("/Users/gurnoorsingh/Documents/EcoCodeTestProject");
 
@@ -25,23 +28,38 @@ public class Main {
         long totalLines = 0;
 
         for (JavaFileInfo file : files) {
+            if(file.getFileName().equals("JsonObject.java")) {
+                List<ClassInfo> classes = parser.parseFile(file.getPath());
 
-            System.out.println(
-                    "File Name: " + file.getFileName()
-            );
-            System.out.println(
-                    "Path: " + file.getPath()
-            );
+                System.out.println("Parsing: " + file.getFileName());
+                for(ClassInfo classInfo : classes) {
+                    System.out.println("\nClass: " + classInfo.getName());
 
-            System.out.println(
-                    "Line Count: " + file.getLineCount()
-            );
-
-            System.out.println(
-                    "Test File: " + file.isTestFile()
-            );
-
-            System.out.println();
+                    for(MethodInfo method : classInfo.getMethods()){
+                        System.out.println("Method: " + method.getName());
+                        System.out.println("Return Type: " + method.getReturnType());
+                        System.out.println("Signature: " + method.getSignature());
+                        System.out.println("Line: " + method.getLineNumber());
+                        System.out.println();
+                    }
+                }
+            }
+//            System.out.println(
+//                    "File Name: " + file.getFileName()
+//            );
+//            System.out.println(
+//                    "Path: " + file.getPath()
+//            );
+//
+//            System.out.println(
+//                    "Line Count: " + file.getLineCount()
+//            );
+//
+//            System.out.println(
+//                    "Test File: " + file.isTestFile()
+//            );
+//
+//            System.out.println();
 
             totalLines += file.getLineCount();
 
@@ -67,5 +85,7 @@ public class Main {
         System.out.println(
                 "Total lines: " + totalLines
         );
+
+
     }
 }
